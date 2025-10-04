@@ -6,7 +6,6 @@
 ## 📘 Overview
 **bioseqkit** is a simple educational package that implements essential bioinformatics utilities:
 - DNA/RNA sequence manipulations: transcription, reverse, complement, reverse-complement.  
-- Validation of nucleic acid sequences.  
 - FASTQ-like read filtering based on GC content, sequence length, and Phred + 33 quality.  
 
 All functionality is implemented **without external dependencies** — only the Python 3.10+ standard library.
@@ -32,11 +31,6 @@ Clone the repository and navigate into it:
 git clone https://github.com/arnautoleg/bioseqkit.git
 cd bioseqkit
 git switch hw4-modules # before the pull request
-```
-
-Run directly with Python 3.10 or higher:
-```bash
-python bioseqkit.py
 ```
 
 No installation of extra packages is required.
@@ -91,10 +85,6 @@ filtered = filter_fastq(
 
 print(filtered.keys())  # -> dict_keys(['read1'])
 ```
-
-**Notes:**
-- Passing a single number for `gc_bounds` or `length_bounds` treats it as the *upper bound* (0, x).  
-- Bounds are *inclusive* on both sides.
 
 ---
 
