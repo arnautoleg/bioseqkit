@@ -26,11 +26,12 @@ bioseqkit/
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Installation 
 Clone the repository and navigate into it:
 ```bash
 git clone https://github.com/arnautoleg/bioseqkit.git
 cd bioseqkit
+git switch hw4-modules # before the pull request
 ```
 
 Run directly with Python 3.10 or higher:
@@ -50,9 +51,13 @@ Use the function `run_dna_rna_tools(*args)` to apply one of the supported proced
 ```python
 from bioseqkit import run_dna_rna_tools
 
-run_dna_rna_tools("ATGC", "reverse")                 # -> 'CGTA'
-run_dna_rna_tools("ATGC", "transcribe")              # -> 'AUGC'
-run_dna_rna_tools("ATGC", "AUGC", "is_nucleic_acid") # -> [True, True]
+run_dna_rna_tools('TTUU', 'is_nucleic_acid') # False !!
+run_dna_rna_tools('ATG', 'transcribe') # 'AUG'
+run_dna_rna_tools('ATG', 'reverse') # 'GTA'
+run_dna_rna_tools('AtG', 'complement') # 'TaC'
+run_dna_rna_tools('ATc', 'reverse_complement') # 'cAT'
+run_dna_rna_tools('ATG', 'aT', 'reverse') # ['GTA', 'Ta']
+
 ```
 
 **Supported operations:**
@@ -103,7 +108,7 @@ print(filtered.keys())  # -> dict_keys(['read1'])
 
 ---
 
-## 🧪 Testing
+## 🧪 Testing (in development)
 You can add or run tests via [pytest](https://pytest.org):
 ```bash
 pytest -q
