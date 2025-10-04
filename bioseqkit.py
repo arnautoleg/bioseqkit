@@ -3,7 +3,7 @@ from modules.dna_rna import (
     transcribe,
     reverse,
     complement,
-    reverse_complement, 
+    reverse_complement,
     _ensure_strings
 )
 
@@ -15,7 +15,7 @@ from modules.fastq import (
 )
 
 
-from modules.types_alliases import SeqTuple, SeqDict, Num, Bounds
+from modules.types_alliases import SeqDict, Bounds
 
 
 def run_dna_rna_tools(*args):
@@ -34,25 +34,28 @@ def run_dna_rna_tools(*args):
 
     Returns:
         str | bool | list[str] | list[bool]
-            Single value for one input sequence; list of results for multiple inputs.
+        Single value for one input sequence; list of
+        results for multiple inputs.
 
     Raises:
         ValueError:
-            If fewer than two arguments are provided or if the procedure name is unknown.
+            If fewer than two arguments are provided or
+            if the procedure name is unknown.
         TypeError:
-            If the last argument is not a string or if any of the sequences are not strings.
+            If the last argument is not a string or if
+            any of the sequences are not strings.
 
     Notes:
         Prints the result to the console before returning it.
     """
- 
+
     if len(args) < 2:
         raise ValueError("Provide at least one sequence and a procedure")
 
     *sequences, procedure = args
-    
+
     if not isinstance(procedure, str):
-        raise TypeError("The last argument is the name of the procedure (str).")
+        raise TypeError("The last argument is a name of the procedure (str).")
 
     _ensure_strings(sequences)
 
@@ -67,7 +70,6 @@ def run_dna_rna_tools(*args):
     func = procedures.get(procedure)
     if func is None:
         raise ValueError(f"Unknown procedure: {procedure}")
-        
 
     results = [func(seq) for seq in sequences]
 
@@ -77,23 +79,25 @@ def run_dna_rna_tools(*args):
     return to_print
 
 
-def filter_fastq(
-    seqs: SeqDict,
-    gc_bounds: Bounds = (0, 100),
-    length_bounds: Bounds = (0, 2**32),
-    quality_threshold: float = 0.0) -> SeqDict:
+def filter_fastq(seqs: SeqDict,
+                 gc_bounds: Bounds = (0, 100),
+                 length_bounds: Bounds = (0, 2**32),
+                 quality_threshold: float = 0.0) -> SeqDict:
     """
-    Filters FASTQ reads by GC-content, sequence length, and average quality (Phred+33).
+    Filters FASTQ reads by GC-content, sequence length,
+    and average quality (Phred+33).
 
     Arguments:
         seqs: dict[str, tuple[str, str]]
             Dictionary of reads in the form {id: (sequence, quality)}.
         gc_bounds: float | tuple[float, float], default (0, 100)
             Lower and upper bounds for GC-content in percent.
-            If a single number is provided, it is treated as the upper bound (0, x).
+            If a single number is provided, it is treated
+            as the upper bound (0, x).
         length_bounds: float | tuple[float, float], default (0, 2**32)
             Lower and upper bounds for read length.
-            If a single number is provided, it is treated as the upper bound (0, x).
+            If a single number is provided, it is treated
+            as the upper bound (0, x).
         quality_threshold: float, default 0.0
             Minimum allowed average Phred+33 quality (inclusive).
 

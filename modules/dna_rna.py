@@ -6,7 +6,7 @@ RNA_COMPLEMENT_MAP = str.maketrans("AUCGaucg", "UAGCuagc")
 
 
 def _is_subset(seq: str, alphabet: set[str]) -> bool:
-    """True if all characters of seq belong to the given alphabet 
+    """True if all characters of seq belong to the given alphabet
     (case-insensitive via mixed-case alphabet)."""
     return set(seq).issubset(alphabet)
 
@@ -68,4 +68,3 @@ def _ensure_strings(items) -> None:
     for it in items:
         if not isinstance(it, str):
             raise TypeError("All sequences must be strings.")
-        
