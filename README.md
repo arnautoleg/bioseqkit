@@ -83,7 +83,8 @@ filtered = filter_fastq(
     quality_threshold=30,    # mean Q ≥ 30
 )
 
-print(filtered.keys())  # -> dict_keys(['read1'])
+print(result)
+# {'read1': ('ATGCATGC', 'IIIIIIII')}
 ```
 
 ---
@@ -94,7 +95,7 @@ print(filtered.keys())  # -> dict_keys(['read1'])
 |---------|--------------|
 | `dna_rna.py` | Sequence validation, transcription, reverse/complement operations |
 | `fastq.py` | Filtering helpers: GC%, length, quality |
-| `types_alliases.py` | Common type aliases (`SeqTuple`, `SeqDict`, `Bounds`) |
+| `types_alliases.py` | Common type aliases (`seq_tuple`, `seq_dict`, `bounds`) |
 
 ---
 
