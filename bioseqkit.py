@@ -128,4 +128,3 @@ def filter_fastq(seqs: seq_dict,
             result[read_id] = (seq, qual)
 
     return result
-

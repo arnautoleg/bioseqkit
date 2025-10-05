@@ -76,7 +76,7 @@ seqs = {
     "read3": ("GCGCGC",   "!!!!!!"),    # GC=100%, len=6, meanQ≈0
 }
 
-filtered = filter_fastq(
+result = filter_fastq(
     seqs,
     gc_bounds=(40, 100),     # GC % ∈ [40, 100]
     length_bounds=(6, 10),   # len ∈ [6, 10]
