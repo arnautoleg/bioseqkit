@@ -2,7 +2,6 @@
 Common type aliases for types in  bioseqkit.
 """
 
-SeqTuple = tuple[str, str]
-SeqDict = dict[str, SeqTuple]
-Num = int | float
-Bounds = int | float | tuple[int | float, int | float]
+seq_tuple = tuple[str, str]
+seq_dict = dict[str, seq_tuple]
+bounds = int | float | tuple[int | float, int | float]

@@ -1,7 +1,7 @@
-from modules.types_alliases import Bounds
+from modules.types_alliases import bounds
 
 
-def _normalize_bounds(values: Bounds) -> tuple[float, float]:
+def _normalize_bounds(values: bounds) -> tuple[float, float]:
     """
     Converts bounds to a pair (low, high).
     - Number x → (0, x)
@@ -46,7 +46,7 @@ def mean_phred33(qual: str) -> float:
     return total / len(qual)
 
 
-def is_gc_within_bounds(seq: str, gc_bounds: Bounds) -> bool:
+def is_gc_within_bounds(seq: str, gc_bounds: bounds) -> bool:
     """
     Check that the GC content (as a percentage of the read length)
     is within the valid range.
@@ -58,7 +58,7 @@ def is_gc_within_bounds(seq: str, gc_bounds: Bounds) -> bool:
     return low <= gc <= high
 
 
-def is_length_within_bounds(seq: str, length_bounds: Bounds) -> bool:
+def is_length_within_bounds(seq: str, length_bounds: bounds) -> bool:
     """
     Check that the sequence length is within the valid range.
     """

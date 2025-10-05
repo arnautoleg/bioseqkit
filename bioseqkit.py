@@ -15,7 +15,7 @@ from modules.fastq import (
 )
 
 
-from modules.types_alliases import SeqDict, Bounds
+from modules.types_alliases import seq_dict, bounds
 
 
 def run_dna_rna_tools(*args):
@@ -79,10 +79,10 @@ def run_dna_rna_tools(*args):
     return to_print
 
 
-def filter_fastq(seqs: SeqDict,
-                 gc_bounds: Bounds = (0, 100),
-                 length_bounds: Bounds = (0, 2**32),
-                 quality_threshold: float = 0.0) -> SeqDict:
+def filter_fastq(seqs: seq_dict,
+                 gc_bounds: bounds = (0, 100),
+                 length_bounds: bounds = (0, 2**32),
+                 quality_threshold: float = 0.0) -> seq_dict:
     """
     Filters FASTQ reads by GC-content, sequence length,
     and average quality (Phred+33).
@@ -111,7 +111,7 @@ def filter_fastq(seqs: SeqDict,
         ValueError:
             If provided bounds are invalid or incorrectly formatted.
     """
-    result: SeqDict = {}
+    result: seq_dict = {}
 
     for read_id, pair in seqs.items():
         if not (isinstance(pair, tuple) and len(pair) == 2):
@@ -128,3 +128,4 @@ def filter_fastq(seqs: SeqDict,
             result[read_id] = (seq, qual)
 
     return result
+
