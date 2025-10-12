@@ -4,18 +4,13 @@ from modules.dna_rna import (
     reverse,
     complement,
     reverse_complement,
-    _ensure_strings
+    _ensure_strings,
 )
 
-from modules.fastq import (
-    is_valid_pair,
-    is_gc_within_bounds,
-    is_length_within_bounds,
-    is_quality_pass,
-)
+from modules.fastq import read_fastq_to_dict, write_fastq_from_dict, filter_fastq_dict
 
 
-from modules.types_alliases import seq_dict, bounds
+from modules.types_alliases import bounds
 
 
 def run_dna_rna_tools(*args):
@@ -79,52 +74,39 @@ def run_dna_rna_tools(*args):
     return to_print
 
 
-def filter_fastq(seqs: seq_dict,
-                 gc_bounds: bounds = (0, 100),
-                 length_bounds: bounds = (0, 2**32),
-                 quality_threshold: float = 0.0) -> seq_dict:
+def filter_fastq(
+    input_fastq: str,
+    output_fastq: str,
+    gc_bounds: bounds = (0, 100),
+    length_bounds: bounds = (0, 2**32),
+    quality_threshold: float = 0.0,
+) -> str:
     """
-    Filters FASTQ reads by GC-content, sequence length,
-    and average quality (Phred+33).
-
-    Arguments:
-        seqs: dict[str, tuple[str, str]]
-            Dictionary of reads in the form {id: (sequence, quality)}.
-        gc_bounds: float | tuple[float, float], default (0, 100)
+    Reads FASTQ from `input_fastq`, filters reads by GC%, length,
+    and mean Phred+33 quality, then writes the passed reads to `output_fastq`
+    (saved into ./filtered/ by your writer).
+    gc_bounds: float | tuple[float, float], default (0, 100)
             Lower and upper bounds for GC-content in percent.
             If a single number is provided, it is treated
             as the upper bound (0, x).
-        length_bounds: float | tuple[float, float], default (0, 2**32)
+    length_bounds: float | tuple[float, float], default (0, 2**32)
             Lower and upper bounds for read length.
             If a single number is provided, it is treated
             as the upper bound (0, x).
-        quality_threshold: float, default 0.0
+    quality_threshold: float, default 0.0
             Minimum allowed average Phred+33 quality (inclusive).
 
     Returns:
-        dict[str, tuple[str, str]]
-            Dictionary containing only reads that passed all filters.
-
-    Raises:
-        TypeError:
-            If inputs are not in the expected types or formats.
-        ValueError:
-            If provided bounds are invalid or incorrectly formatted.
+        str: Path to the written FASTQ (as returned by write_fastq_from_dict).
+        In my opinion is comfortable for users
     """
-    result: seq_dict = {}
 
-    for read_id, pair in seqs.items():
-        if not (isinstance(pair, tuple) and len(pair) == 2):
-            continue
-        seq, qual = pair
-        if not is_valid_pair(seq, qual):
-            continue
-
-        if (
-            is_gc_within_bounds(seq, gc_bounds)
-            and is_length_within_bounds(seq, length_bounds)
-            and is_quality_pass(qual, quality_threshold)
-        ):
-            result[read_id] = (seq, qual)
-
-    return result
+    seqs = read_fastq_to_dict(input_fastq)
+    filtered = filter_fastq_dict(
+        seqs,
+        gc_bounds=gc_bounds,
+        length_bounds=length_bounds,
+        quality_threshold=quality_threshold,
+    )
+    out_path = write_fastq_from_dict(filtered, output_fastq)
+    return out_path
