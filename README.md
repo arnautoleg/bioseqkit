@@ -40,6 +40,7 @@ git switch HW16 # before the pull request
 Create and activate a virtual environment
 ```bash
 python3 -m venv venv
+source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 python -c "import Bio; print(Bio.__version__)" # check that Biopython is installed correctly
@@ -84,7 +85,7 @@ print(is_nucleic_acid("TTUU"))# False
 
 ### 2️⃣ FASTQ filtering (Biopython)
 
-Filtering is implemented with Biopython SeqIO / SeqRecord and supports the same criteria as in the previous semester:
+Filtering is implemented with Biopython SeqIO / SeqRecord and supports 
 read length, mean Phred quality, and GC%
 
 ```python
@@ -95,12 +96,12 @@ out = filter_fastq(
     output_fastq="example_data/example_filtered.fastq",
     gc_bounds=(40, 60),        # GC% range
     length_bounds=(50, 300),   # length range
-    quality_threshold=20       # mean Phred (Phred+33)
+    quality_threshold=20,      # mean Phred (Phred+33)
     out_dir="filtered",        # output folder (created automatically)
 )
 
 ```
-All filtrated reads are saved in "example_data/example_filtered.fastq" directory
+All filtrated reads are saved in "filteredcd/example_filtered.fastq" directory
 
 ###  3️⃣ Convert multi-line FASTA to one-line per record
 
