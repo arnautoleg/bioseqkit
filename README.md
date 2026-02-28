@@ -1,6 +1,6 @@
 # 🧬 bioseqkit
-*A lightweight Python toolkit for DNA/RNA operations and FASTQ read filtering,
-completed by instruments for bioinformatics files processing*
+*Educational project implementing biological sequence processing using
+Object-Oriented Programming (OOP) and Biopython.*
 
 ---
 
@@ -11,7 +11,7 @@ completed by instruments for bioinformatics files processing*
 - FASTQ, FASTA and GBK files manipulation
   
 
-All functionality is implemented **with external dependencies** in accordance to requirements.txt.
+External dependency: Biopython (see requirements.txt).
 
 ---
 
@@ -93,7 +93,7 @@ from bioseqkit import filter_fastq
 
 out = filter_fastq(
     input_fastq="example_data/example_fastq.fastq",
-    output_fastq="example_data/example_filtered.fastq",
+    output_fastq="example_filtered.fastq",
     gc_bounds=(40, 60),        # GC% range
     length_bounds=(50, 300),   # length range
     quality_threshold=20,      # mean Phred (Phred+33)
@@ -101,7 +101,7 @@ out = filter_fastq(
 )
 
 ```
-All filtrated reads are saved in "filteredcd/example_filtered.fastq" directory
+Saved to filtered/example_filtered.fastq (by default).
 
 ###  3️⃣ Convert multi-line FASTA to one-line per record
 
