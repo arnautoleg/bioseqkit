@@ -215,23 +215,3 @@ def filter_fastq(
 
     print(f"Written {n_written} reads -> {out_path}")
     return str(out_path)
-
-
-# Demo/tests
-if __name__ == "__main__":
-    # FASTQ demo
-    out = filter_fastq(
-        input_fastq="example_data/example_fastq.fastq",
-        output_fastq="example_filtered.fastq",
-        gc_bounds=(40, 60),
-        length_bounds=(50, 300),
-        quality_threshold=20,
-    )
-    print("FASTQ output:", out)
-
-    # Sequence demos (print plain sequences like in your examples)
-    print(DNASequence("ATG").transcribe().sequence)          # AUG
-    print(DNASequence("ATG").reverse().sequence)             # GTA
-    print(DNASequence("AtG").complement().sequence)          # TAC
-    print(DNASequence("ATc").reverse_complement().sequence)  # GAT
-    print(is_nucleic_acid("TTUU"))                           # False
