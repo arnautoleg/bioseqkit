@@ -503,4 +503,4 @@ def select_genes_from_gbk_to_fasta(
                 rec_id, cds_list, targets_norm, n_before, n_after, seen_keys, fout
             )
 
-    return None
+    return written_total
