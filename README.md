@@ -193,25 +193,9 @@ Example for FASTQ filtering:
 ```bash
 python cli.py filter-fastq --help
 ```
-Output:
-usage: bioseqkit filter-fastq [-h] --input-fastq INPUT_FASTQ --output-fastq OUTPUT_FASTQ
-                              [--gc-bounds MIN MAX] [--length-bounds MIN MAX]
-                              [--quality-threshold QUALITY_THRESHOLD] [--out-dir OUT_DIR]
 
-options:
-  -h, --help            show this help message and exit
-  --input-fastq INPUT_FASTQ
-                        Path to input FASTQ.
-  --output-fastq OUTPUT_FASTQ
-                        Name of output FASTQ file.
-  --gc-bounds MIN MAX   Lower and upper GC% bounds.
-  --length-bounds MIN MAX
-                        Lower and upper read-length bounds.
-  --quality-threshold QUALITY_THRESHOLD
-                        Minimum mean Phred quality.
-  --out-dir OUT_DIR     Directory for filtered FASTQ output.
+ <img width="669" height="386" alt="image" src="https://github.com/user-attachments/assets/13de9090-5ac6-4208-b9a1-24ceb4d6b3cc" />
 
-  <img width="680" height="387" alt="image" src="https://github.com/user-attachments/assets/67863125-4adc-4b20-8430-c941c4b10abd" />
 
 
 ### Example convert multiline FASTA (absolute path in WSL):
@@ -228,28 +212,8 @@ python cli.py fasta-oneline \
 The CLI logs execution details into a file: bioseqkit.log
 
 
-Example log entries:
+<img width="1120" height="383" alt="image" src="https://github.com/user-attachments/assets/d5613140-4e53-447e-bfe5-d9ab9853ab9b" />
 
-2026-04-17 16:02:40,031 | INFO | Running fasta-oneline on example_data/example_multiline_fasta.fasta
-
-2026-04-17 16:02:40,038 | INFO | Output written to output.fasta
-
-
-
-Example log entries (wromg file):
-
-2026-04-17 16:04:50,469 | INFO | Running fasta-oneline on wrong.fasta
-
-2026-04-17 16:04:50,470 | ERROR | Error occurred during execution
-
-Traceback (most recent call last):
-  File "/mnt/c/Users/Admin/Desktop/BI_Python/hw21-Python-testing/bioseqkit/cli.py", line 165, in main
-    output_path = convert_multiline_fasta_to_oneline(
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/mnt/c/Users/Admin/Desktop/BI_Python/hw21-Python-testing/bioseqkit/bio_files_processor.py", line 245, in convert_multiline_fasta_to_oneline
-    with open(input_fasta, "r", encoding="utf-8") as fin, \
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: 'wrong.fasta'
 
 
 ## 📄 License
