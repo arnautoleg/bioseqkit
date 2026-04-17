@@ -17,10 +17,13 @@ External dependency: Biopython (see requirements.txt).
 
 ## 📁 Repository structure
 ```
+
 bioseqkit/
 ├─ README.md
-├─ bioseqkit.py                # OOP implementation of biological sequences (Task 1) and FASTQ filtering using Biopython (Task 2)
-├─ bio_files_processor.py      # additional file with instruments for files processing
+├─ bioseqkit.py                # OOP implementation of biological sequences
+├─ bio_files_processor.py      # file processing utilities (FASTA, BLAST, GBK)
+├─ cli.py                      # command-line interface (argparse)
+├─ bioseqkit_test.py           # pytest tests
 ├─ requirements.txt            # project dependencies
 ├─ .gitignore                  # excludes venv, cache
 └─ example_data/               # example input files
@@ -34,17 +37,21 @@ Clone the repository and navigate into it:
 ```bash
 git clone https://github.com/arnautoleg/bioseqkit.git
 cd bioseqkit
-git switch HW16 # before the pull request
+git switch HW21 # before the pull request
 ```
 
-Create and activate a virtual environment
+
 ```bash
+# Create and activate a virtual environment
 python3 -m venv venv
 source venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
-python -c "import Bio; print(Bio.__version__)" # check that Biopython is installed correctly
 
+# Install dependencies (IMPORTANT: use python -m pip)
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+
+# Check that Biopython is installed correctly
+python -c "import Bio; print(Bio.__version__)"
 ```
 
 ---
@@ -143,20 +150,97 @@ select_genes_from_gbk_to_fasta(
 
 ```
 
+
 ---
 
-## 🧪 Testing (in development)
+## 🧪 Testing
 You can add or run tests via [pytest](https://pytest.org):
 ```bash
-pytest -q
+pytest -q bioseqkit_test.py
 ```
-Recommended minimal test set includes checks for:
-- GC % and length inclusion.
-- Upper-bound interpretation.
-- Phred + 33 quality threshold behavior.
-- Correct reverse/complement output.
+
+The tests checks for:
+
+1. DNA transcription
+2. reverse and reverse-complement operations
+3. amino acid residue fraction calculation
+4. invalid alphabet handling (ValueError)
+5. nucleic acid validation
+6. bounds normalization
+7. FASTA file conversion (input/output file test)
+8. FASTQ filtering by quality
+9. BLAST best-hit parsing
+10. empty gene list validation
 
 ---
+
+## 🖥️ Command Line Interface (CLI)
+
+The tool can be used directly from the command line via `cli.py`.
+
+```bash
+python cli.py <command> [arguments]
+```
+
+- Use relative paths if you run commands from the project root
+- Use absolute paths if files are located elsewhere
+
+### Example: CLI help
+You can inspect available arguments for each command using `--help`.
+
+Example for FASTQ filtering:
+
+```bash
+python cli.py filter-fastq --help
+```
+Output:
+usage: bioseqkit filter-fastq [-h] --input-fastq INPUT_FASTQ --output-fastq OUTPUT_FASTQ
+                              [--gc-bounds MIN MAX] [--length-bounds MIN MAX]
+                              [--quality-threshold QUALITY_THRESHOLD] [--out-dir OUT_DIR]
+
+options:
+  -h, --help            show this help message and exit
+  --input-fastq INPUT_FASTQ
+                        Path to input FASTQ.
+  --output-fastq OUTPUT_FASTQ
+                        Name of output FASTQ file.
+  --gc-bounds MIN MAX   Lower and upper GC% bounds.
+  --length-bounds MIN MAX
+                        Lower and upper read-length bounds.
+  --quality-threshold QUALITY_THRESHOLD
+                        Minimum mean Phred quality.
+  --out-dir OUT_DIR     Directory for filtered FASTQ output.
+
+### Example convert multiline FASTA (absolute path in WSL):
+
+```bash
+python cli.py fasta-oneline \
+  --input-fasta /mnt/c/Users/Admin/.../example_data/example_multiline_fasta.fasta \
+  --output-fasta output.fasta
+```
+---
+
+## 📝 Logging
+
+The CLI logs execution details into a file: bioseqkit.log
+
+
+Example log entries:
+2026-04-17 16:02:40,031 | INFO | Running fasta-oneline on example_data/example_multiline_fasta.fasta
+2026-04-17 16:02:40,038 | INFO | Output written to output.fasta
+
+Example log entries (wromg file):
+2026-04-17 16:04:50,469 | INFO | Running fasta-oneline on wrong.fasta
+2026-04-17 16:04:50,470 | ERROR | Error occurred during execution
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/Desktop/BI_Python/hw21-Python-testing/bioseqkit/cli.py", line 165, in main
+    output_path = convert_multiline_fasta_to_oneline(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/Desktop/BI_Python/hw21-Python-testing/bioseqkit/bio_files_processor.py", line 245, in convert_multiline_fasta_to_oneline
+    with open(input_fasta, "r", encoding="utf-8") as fin, \
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'wrong.fasta'
+
 
 ## 📄 License
 This project is distributed under the **MIT License**.
