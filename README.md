@@ -226,11 +226,15 @@ The CLI logs execution details into a file: bioseqkit.log
 
 
 Example log entries:
+
 2026-04-17 16:02:40,031 | INFO | Running fasta-oneline on example_data/example_multiline_fasta.fasta
 
 2026-04-17 16:02:40,038 | INFO | Output written to output.fasta
 
+
+
 Example log entries (wromg file):
+
 2026-04-17 16:04:50,469 | INFO | Running fasta-oneline on wrong.fasta
 
 2026-04-17 16:04:50,470 | ERROR | Error occurred during execution
