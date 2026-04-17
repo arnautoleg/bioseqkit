@@ -1,0 +1,19 @@
+# Virtual environments
+venv/
+.env/
+
+# Output folders
+filtered/
+
+# VS Code settings
+.vscode/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+*.code-workspace
