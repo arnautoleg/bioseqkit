@@ -211,6 +211,9 @@ options:
                         Minimum mean Phred quality.
   --out-dir OUT_DIR     Directory for filtered FASTQ output.
 
+  <img width="680" height="387" alt="image" src="https://github.com/user-attachments/assets/67863125-4adc-4b20-8430-c941c4b10abd" />
+
+
 ### Example convert multiline FASTA (absolute path in WSL):
 
 ```bash
